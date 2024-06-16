@@ -4,7 +4,7 @@ pub type ScoreBoard =
   Dict(String, Int)
 
 pub fn create_score_board() -> ScoreBoard {
-  todo
+  dict.from_list([#("The Best Ever", 1_000_000)])
 }
 
 pub fn add_player(
@@ -12,11 +12,11 @@ pub fn add_player(
   player: String,
   score: Int,
 ) -> ScoreBoard {
-  todo
+  score_board |> dict.insert(player, score)
 }
 
 pub fn remove_player(score_board: ScoreBoard, player: String) -> ScoreBoard {
-  todo
+  score_board |> dict.delete(player)
 }
 
 pub fn update_score(
@@ -24,9 +24,15 @@ pub fn update_score(
   player: String,
   points: Int,
 ) -> ScoreBoard {
-  todo
+  case score_board |> dict.get(player) {
+    Ok(score) -> score_board |> dict.insert(player, score + points)
+    Error(_) -> score_board
+  }
 }
 
+const bonus_monday_points = 100
+
 pub fn apply_monday_bonus(score_board: ScoreBoard) -> ScoreBoard {
-  todo
+  score_board
+  |> dict.map_values(fn(_k, v) { v + bonus_monday_points })
 }
